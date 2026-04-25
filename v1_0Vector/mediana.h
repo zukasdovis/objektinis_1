@@ -3,7 +3,7 @@
 
 #include <vector>
 
-double mediana(std::vector<double> nd);
-double vidurkis(std::vector<double> nd);
+double mediana(std::vector<int> nd);
+double vidurkis(std::vector<int> nd);
 
 #endif

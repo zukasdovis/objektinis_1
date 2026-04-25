@@ -1,7 +1,7 @@
 #include "mediana.h"
 #include <algorithm>
 
-double mediana(std::vector<double> nd)
+double mediana(std::vector<int> nd)
 {
     if (nd.empty())
         return 0.0;
@@ -12,12 +12,12 @@ double mediana(std::vector<double> nd)
     return nd[n / 2];
 }
 
-double vidurkis(std::vector<double> nd)
+double vidurkis(std::vector<int> nd)
 {
     if (nd.empty())
         return 0.0;
-    double sum = 0;
-    for (double x : nd)
+    int sum = 0;
+    for (int x : nd)
         sum += x;
     return sum / nd.size();
 }

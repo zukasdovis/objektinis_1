@@ -15,15 +15,21 @@ void failu_nusk(vector<Studentas> &grupe, string failas)
     if (!fd)
         throw runtime_error("Failas neegzistuoja arba negali buti atidarytas.");
 
-    string line;
-    getline(fd, line); // skip header
+    string line, niekas;
+    getline(fd, line);
+    stringstream ss(line);
+    int n = 0;
+    ss >> niekas >> niekas;
+    while (ss >> niekas)
+        n++;
+    n--; // paskutinis yra egzaminas
 
     while (getline(fd, line))
     {
         if (line.empty())
             continue;
         stringstream ss(line);
-        Studentas A(ss);
+        Studentas A(ss, n); // perduodame n
         grupe.push_back(A);
     }
 }
