@@ -1,10 +1,84 @@
 #include "studentai.h"
+#include <iomanip>
 #include <sstream>
-#include <algorithm>
 
 using std::istream;
+using std::ostream;
 using std::string;
 using std::vector;
+
+// --- Rule of Five realizacija ---
+
+// 2. Copy konstruktorius
+Studentas::Studentas(const Studentas &kitas)
+    : vardas_(kitas.vardas_),
+      pavarde_(kitas.pavarde_),
+      egzaminas_(kitas.egzaminas_),
+      nd_(kitas.nd_),
+      galutinis_med_(kitas.galutinis_med_),
+      galutinis_vid_(kitas.galutinis_vid_) {}
+
+// 3. Move konstruktorius
+Studentas::Studentas(Studentas &&kitas) noexcept
+    : vardas_(std::move(kitas.vardas_)),
+      pavarde_(std::move(kitas.pavarde_)),
+      egzaminas_(kitas.egzaminas_),
+      nd_(std::move(kitas.nd_)),
+      galutinis_med_(kitas.galutinis_med_),
+      galutinis_vid_(kitas.galutinis_vid_)
+{
+    kitas.egzaminas_ = 0;
+    kitas.galutinis_med_ = 0;
+    kitas.galutinis_vid_ = 0;
+}
+
+// 4. Copy assignment
+Studentas &Studentas::operator=(const Studentas &kitas)
+{
+    if (this == &kitas)
+        return *this; // apsauga nuo self-assignment
+    vardas_ = kitas.vardas_;
+    pavarde_ = kitas.pavarde_;
+    egzaminas_ = kitas.egzaminas_;
+    nd_ = kitas.nd_;
+    galutinis_med_ = kitas.galutinis_med_;
+    galutinis_vid_ = kitas.galutinis_vid_;
+    return *this;
+}
+
+// 5. Move assignment
+Studentas &Studentas::operator=(Studentas &&kitas) noexcept
+{
+    if (this == &kitas)
+        return *this;
+    vardas_ = std::move(kitas.vardas_);
+    pavarde_ = std::move(kitas.pavarde_);
+    egzaminas_ = kitas.egzaminas_;
+    nd_ = std::move(kitas.nd_);
+    galutinis_med_ = kitas.galutinis_med_;
+    galutinis_vid_ = kitas.galutinis_vid_;
+    kitas.egzaminas_ = 0;
+    kitas.galutinis_med_ = 0;
+    kitas.galutinis_vid_ = 0;
+    return *this;
+}
+
+// 6. Destruktorius
+Studentas::~Studentas() {}
+
+// --- Papildomi konstruktoriai ---
+
+Studentas::Studentas(istream &is)
+{
+    readStudent(is);
+}
+
+Studentas::Studentas(istream &is, int n)
+{
+    readStudent(is, n);
+}
+
+// --- galBalas ---
 
 double Studentas::galBalas(double (*f)(std::vector<int>)) const
 {
@@ -13,12 +87,9 @@ double Studentas::galBalas(double (*f)(std::vector<int>)) const
     return galutinis_vid_;
 }
 
-Studentas::Studentas(std::istream &is)
-{
-    readStudent(is);
-}
+// --- readStudent be n (ranka) ---
 
-std::istream &Studentas::readStudent(std::istream &is)
+istream &Studentas::readStudent(istream &is)
 {
     is >> vardas_ >> pavarde_;
     nd_.clear();
@@ -35,13 +106,9 @@ std::istream &Studentas::readStudent(std::istream &is)
     return is;
 }
 
-// failo skaitymas su n
-Studentas::Studentas(std::istream &is, int n)
-{
-    readStudent(is, n);
-}
+// --- readStudent su n (failas) ---
 
-std::istream &Studentas::readStudent(std::istream &is, int n)
+istream &Studentas::readStudent(istream &is, int n)
 {
     is >> vardas_ >> pavarde_;
     nd_.clear();
@@ -56,9 +123,31 @@ std::istream &Studentas::readStudent(std::istream &is, int n)
     }
     is >> egzaminas_;
     galutinis_med_ = 0.4 * mediana(nd_) + 0.6 * egzaminas_;
-    galutinis_vid_ = (n != 0) ? 0.4 * ((double)sum / n) + 0.6 * egzaminas_ : 0.6 * egzaminas_;
+    galutinis_vid_ = (n != 0) ? 0.4 * ((double)sum / n) + 0.6 * egzaminas_
+                              : 0.6 * egzaminas_;
     return is;
 }
+
+// --- >> operatorius ---
+
+istream &operator>>(istream &is, Studentas &s)
+{
+    return s.readStudent(is);
+}
+
+// --- << operatorius ---
+
+ostream &operator<<(ostream &os, const Studentas &s)
+{
+    os << std::fixed << std::setprecision(2);
+    os << std::left << std::setw(16) << s.vardas_
+       << std::setw(16) << s.pavarde_
+       << std::setw(16) << s.galutinis_med_
+       << std::setw(16) << s.galutinis_vid_;
+    return os;
+}
+
+// --- Compare funkcijos ---
 
 bool compare(const Studentas &A, const Studentas &B)
 {
