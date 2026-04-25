@@ -1,7 +1,8 @@
 #ifndef TYRIMAI_H
 #define TYRIMAI_H
 
-#include <bits/stdc++.h>
+#include <iostream>
+#include <string>
 using namespace std;
 
 void tyrimai();

@@ -1,10 +1,10 @@
 #ifndef FAILAI_H
 #define FAILAI_H
 
-#include "studentas.h"
+#include "studentai.h"
 #include <vector>
 #include <string>
 
-void failu_nusk(std::vector<studentai> &grupe, std::string failas);
+void failu_nusk(std::vector<Studentas> &grupe, std::string failas);
 
 #endif

@@ -1,10 +1,10 @@
 #ifndef OUTPUT_H
 #define OUTPUT_H
 
-#include "studentas.h"
+#include "studentai.h"
 #include <vector>
 
-void outputas(std::vector<studentai> &grupe);
-void outputas_fr(std::vector<studentai> &grupe);
+void outputas(std::vector<Studentas> &grupe);
+void outputas_fr(std::vector<Studentas> &grupe);
 
 #endif
