@@ -1,19 +1,26 @@
-100000 studentų failas
+# Studentas v1.2
 
-| Veikimo laikas (class) | Veikimo laikas (struct) | Vėliava | Vykdomojo failo dydis (class) | Vykdomojo failo dydis (struct) |
-| ---------------------- | ----------------------- | ------- | ----------------------------- | ------------------------------ |
-| 0.277439 s             | 0.241432 s              | -01     | 206.5 KB                      | 210.1 KB                       |
-| 0.305582 s             | 0.251457 s              | -O2     | 189.6 KB                      | 183.8 KB                       |
-| 0.28994 s              | 0.239646 s              | -O3     | 191.2 KB                      | 190.2 KB                       |
+C++ programa skirta studentų duomenų valdymui.
 
 ---
 
-1000000 studentų failas
+## Rule of Five metodai
 
-| Veikimo laikas (class) | Veikimo laikas (struct) | Vėliava | Vykdomojo failo dydis (class) | Vykdomojo failo dydis (struct) |
-| ---------------------- | ----------------------- | ------- | ----------------------------- | ------------------------------ |
-| 2.64364 s              | 2.25808 s               | -01     | 206.5 KB                      | 210.1 KB                       |
-| 2.75745 s              | 2.28378 s               | -O2     | 189.6 KB                      | 183.8 KB                       |
-| 2.66723 s              | 2.14807 s               | -O3     | 191.2 KB                      | 190.2 KB                       |
+| Metodas | Sintaksė | Paskirtis |
+|---|---|---|
+| Default konstruktorius | `Studentas()` | Sukuria tuščią objektą |
+| Copy konstruktorius | `Studentas(const Studentas& a)` | Kuriama objekto kopija |
+| Copy priskyrimo operatorius | `Studentas& operator=(const Studentas& a)` | Objekto kopijos priskyrimas — `b = a` |
+| Move konstruktorius | `Studentas(Studentas&& a)` | Objekto perėmimas — `Studentas b = std::move(a)` |
+| Move priskyrimo operatorius | `Studentas& operator=(Studentas&& a)` | Objekto perėmimas — `b = std::move(a)` |
+| Destruktorius | `~Studentas()` | Objekto sunaikinimas (veikia automatiškai) |
 
 ---
+
+## Įvesties/Išvesties operatoriai
+
+| Operatorius | Sintaksė | Paskirtis |
+|---|---|---|
+| `operator>>` | `std::istream& operator>>(std::istream& is, Studentas& s)` | Nuskaito duomenis iš srauto į objektą |
+| `operator<<` | `std::ostream& operator<<(std::ostream& os, const Studentas& s)` | Išveda objekto duomenis į srautą |
+
