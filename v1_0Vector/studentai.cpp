@@ -7,21 +7,19 @@ using std::ostream;
 using std::string;
 using std::vector;
 
-// --- Rule of Five realizacija ---
-
-// 2. Copy konstruktorius
+// 2. copy konstruktorius
 Studentas::Studentas(const Studentas &kitas)
-    : vardas_(kitas.vardas_),
-      pavarde_(kitas.pavarde_),
+    : Zmogus(kitas), // iškviečiame bazinės klasės copy konstruktorių
       egzaminas_(kitas.egzaminas_),
       nd_(kitas.nd_),
       galutinis_med_(kitas.galutinis_med_),
-      galutinis_vid_(kitas.galutinis_vid_) {}
+      galutinis_vid_(kitas.galutinis_vid_)
+{
+}
 
-// 3. Move konstruktorius
+// 3. move konstruktorius
 Studentas::Studentas(Studentas &&kitas) noexcept
-    : vardas_(std::move(kitas.vardas_)),
-      pavarde_(std::move(kitas.pavarde_)),
+    : Zmogus(std::move(kitas)), // iškviečiame bazinės klasės move konstruktorių
       egzaminas_(kitas.egzaminas_),
       nd_(std::move(kitas.nd_)),
       galutinis_med_(kitas.galutinis_med_),
@@ -32,13 +30,12 @@ Studentas::Studentas(Studentas &&kitas) noexcept
     kitas.galutinis_vid_ = 0;
 }
 
-// 4. Copy assignment
+// 4. copy assignment
 Studentas &Studentas::operator=(const Studentas &kitas)
 {
     if (this == &kitas)
-        return *this; // apsauga nuo self-assignment
-    vardas_ = kitas.vardas_;
-    pavarde_ = kitas.pavarde_;
+        return *this;
+    Zmogus::operator=(kitas); // bazinės klasės copy assignment
     egzaminas_ = kitas.egzaminas_;
     nd_ = kitas.nd_;
     galutinis_med_ = kitas.galutinis_med_;
@@ -46,13 +43,12 @@ Studentas &Studentas::operator=(const Studentas &kitas)
     return *this;
 }
 
-// 5. Move assignment
+// 5. move assignment
 Studentas &Studentas::operator=(Studentas &&kitas) noexcept
 {
     if (this == &kitas)
         return *this;
-    vardas_ = std::move(kitas.vardas_);
-    pavarde_ = std::move(kitas.pavarde_);
+    Zmogus::operator=(std::move(kitas)); // bazinės klasės move assignment
     egzaminas_ = kitas.egzaminas_;
     nd_ = std::move(kitas.nd_);
     galutinis_med_ = kitas.galutinis_med_;
@@ -63,32 +59,26 @@ Studentas &Studentas::operator=(Studentas &&kitas) noexcept
     return *this;
 }
 
-// 6. Destruktorius
-Studentas::~Studentas() {}
-
-// --- Papildomi konstruktoriai ---
-
-Studentas::Studentas(istream &is)
+// papildomi konstruktoriai
+Studentas::Studentas(istream &is) : Zmogus()
 {
     readStudent(is);
 }
 
-Studentas::Studentas(istream &is, int n)
+Studentas::Studentas(istream &is, int n) : Zmogus()
 {
     readStudent(is, n);
 }
 
-// --- galBalas ---
-
-double Studentas::galBalas(double (*f)(std::vector<int>)) const
+// galBalas
+double Studentas::galBalas(double (*f)(vector<int>)) const
 {
     if (f == mediana)
         return galutinis_med_;
     return galutinis_vid_;
 }
 
-// --- readStudent be n (ranka) ---
-
+// readStudent be n
 istream &Studentas::readStudent(istream &is)
 {
     is >> vardas_ >> pavarde_;
@@ -106,8 +96,7 @@ istream &Studentas::readStudent(istream &is)
     return is;
 }
 
-// --- readStudent su n (failas) ---
-
+// readStudent su n
 istream &Studentas::readStudent(istream &is, int n)
 {
     is >> vardas_ >> pavarde_;
@@ -128,27 +117,30 @@ istream &Studentas::readStudent(istream &is, int n)
     return is;
 }
 
-// --- >> operatorius ---
+// print - virtualios funkcijos realizacija
+void Studentas::print(ostream &os) const
+{
+    os << std::fixed << std::setprecision(2);
+    os << std::left << std::setw(16) << vardas_
+       << std::setw(16) << pavarde_
+       << std::setw(16) << galutinis_med_
+       << std::setw(16) << galutinis_vid_;
+}
 
+// >> operatorius
 istream &operator>>(istream &is, Studentas &s)
 {
     return s.readStudent(is);
 }
 
-// --- << operatorius ---
-
+// << operatorius
 ostream &operator<<(ostream &os, const Studentas &s)
 {
-    os << std::fixed << std::setprecision(2);
-    os << std::left << std::setw(16) << s.vardas_
-       << std::setw(16) << s.pavarde_
-       << std::setw(16) << s.galutinis_med_
-       << std::setw(16) << s.galutinis_vid_;
+    s.print(os);
     return os;
 }
 
-// --- Compare funkcijos ---
-
+// compare funkcijos
 bool compare(const Studentas &A, const Studentas &B)
 {
     return A.vardas() < B.vardas();

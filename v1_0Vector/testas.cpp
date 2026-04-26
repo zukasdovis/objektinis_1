@@ -119,6 +119,16 @@ void testDestruktorius()
     } // destruktorius iškviestas čia
     std::cout << "Destruktorius\n";
 }
+void testAbstrakti()
+{
+    // Zmogus z; // KLAIDA - abstrakti klasė, nekompiliuojasi
+    //  Tai įrodo kad Zmogus yra abstrakti
+
+    Studentas s;         // Studentas - galima
+    Zmogus *z = &s;      // rodyklė į bazinę klasę - galima
+    z->print(std::cout); // virtualios funkcijos iškvietimas
+    std::cout << "\n✓ Abstrakti klase Zmogus - objekto sukurti negalima\n";
+}
 
 int main()
 {
@@ -134,6 +144,7 @@ int main()
     testIvestiesOperatorius();
     testIsvestiesOperatorius();
     testDestruktorius();
+    testAbstrakti();
     std::cout << "\n=== Visi testai praėjo ===\n";
     return 0;
 }
