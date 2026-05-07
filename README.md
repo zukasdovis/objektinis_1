@@ -1,3 +1,72 @@
+# Studentas v1.5
+
+## Reikalavimai
+
+| Reikalavimas | Versija |
+|---|---|
+| C++ standartas | C++14 |
+| Kompiliatorius | g++ arba MSVC |
+| CMake | 3.14+ |
+
+---
+
+## Įdiegimas ir paleidimas
+
+### 1. Klonuok repoziciją
+```bash
+git clone https://github.com/zukasdovis/objektinis_1.git
+cd objektinis/v1_0Vector
+```
+
+### 2. Kompiliavimas su g++
+```bash
+g++ failai.cpp generatorius.cpp ivedimas.cpp mediana.cpp output.cpp rusiavimas.cpp studentai.cpp tyrimai.cpp v1_0.cpp -o programa
+```
+
+### 3. Paleidimas
+```bash
+# Linux / Mac
+./programa
+
+# Windows
+programa.exe
+```
+
+---
+
+## Kompiliavimas su CMake
+
+```bash
+mkdir build
+cd build
+cmake ..
+cmake --build .
+
+# Paleidimas
+.\Debug\programa.exe   # Windows
+./programa             # Linux
+```
+
+---
+
+## Testų paleidimas
+
+```bash
+cd build
+cmake ..
+cmake --build .
+
+.\Debug\testai.exe   # Windows
+./testai             # Linux
+```
+
+---
+
+## Naudojimas
+
+Paleidus programą pasirodo meniu:
+
+
 # Studentas v2.0
 
 Šioje versijoje projektas papildytas automatizuotais unit testais ir Doxygen dokumentacija. Unit testai realizuoti naudojant GoogleTest karkasą, o testų tikslas - patikrinti svarbiausią Studentas klasės elgseną: konstruktorių, kopijavimą, perkėlimą, priskyrimo operatorių, įvesties/išvesties operatorių ir galutinio balo skaičiavimą.
