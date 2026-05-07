@@ -1,5 +1,7 @@
 # Studentas v2.0
 
+Šioje versijoje projektas papildytas automatizuotais unit testais ir Doxygen dokumentacija. Unit testai realizuoti naudojant GoogleTest karkasą, o testų tikslas - patikrinti svarbiausią Studentas klasės elgseną: konstruktorių, kopijavimą, perkėlimą, priskyrimo operatorių, įvesties/išvesties operatorių ir galutinio balo skaičiavimą.
+
 # v1.5 rezultatai
 
 Šioje versijoje išlaikyta ta pati v1.2 versijos logika, tačiau pridėta abstrakti bazinė klasė `Zmogus` ir iš jos išvesta `Studentas` klasė.
