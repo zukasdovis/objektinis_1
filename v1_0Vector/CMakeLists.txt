@@ -3,7 +3,6 @@ project(Studentas)
 
 set(CMAKE_CXX_STANDARD 14)
 
-# Ši eilutė sprendžia RuntimeLibrary problemą
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 include(FetchContent)
